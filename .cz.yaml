@@ -1,0 +1,84 @@
+---
+commitizen:
+  bump_message: 'bump: Bump version $current_version -> $new_version [skip ci]'
+  customize:
+    bump_map:
+      BREAKING CHANGE: MAJOR
+      break: MAJOR
+      feat: MINOR
+      fix: PATCH
+      hotfix: PATCH
+      new: MINOR
+    bump_pattern: '^(?:Merged PR \d+: )?((BREAKING[\-\ ]CHANGE|\w+)(\(.+\))?!?):'
+    change_type_map:
+      ci: CI/CD
+      feat: Feat
+      fix: Fix
+    change_type_order:
+    - BREAKING CHANGE
+    - feat
+    - fix
+    - refactor
+    - build
+    - chore
+    - docs
+    - style
+    - perf
+    - test
+    changelog_pattern: '^(?:Merged PR \d+: )?((BREAKING[\-\ ]CHANGE|\w+)(\(.+\))?!?):'
+    commit_parser: "^(?:Merged PR \\d+: )?((?P<change_type>feat|fix|refactor|perf|BREAKING\
+      \ CHANGE)(?:\\((?P<scope>[^()\r\n]*)\\)|\\()?(?P<breaking>!)?|\\w+!):\\s(?P<message>.*)?"
+    example: 'feat: this feature enable customize through config file'
+    info: This is customized info
+    info_path: cz_customize_info.txt
+    message_template: '{{change_type}}{% if scope %}({{scope}}){% endif %}: {{message}}'
+    questions:
+    - choices:
+      - name: 'fix: A bug fix. Correlates with PATCH in SemVer'
+        value: fix
+      - name: 'feat: A new feature. Correlates with MINOR in SemVer'
+        value: feat
+      - name: 'breaking change: Breaking change.  Correlates with MAJOR in SemVer'
+        value: BREAKING CHANGE
+      - name: 'ci: Changes to CI configuration files and scripts (example scopes:
+          GitLabCI)'
+        value: ci
+      - name: 'chore: No functional changes'
+        value: chore
+      - name: 'refactor: A code change that neither fixes a bug nor adds a feature'
+        value: refactor
+      - name: 'build: Changes that affect the build system or external dependencies
+          (example scopes: pip, docker, npm)'
+        value: build
+      - name: 'docs: Documentation only changes'
+        value: docs
+      - name: 'style: Changes that do not affect the meaning of the code (white-space,
+          formatting, missing semi-colons, etc)'
+        value: style
+      - name: 'perf: A code change that improves performance'
+        value: perf
+      - name: 'test: Adding missing or correcting existing tests'
+        value: test
+      message: Select the type of change you are committing
+      name: change_type
+      type: list
+    - message: 'Scope for this change (optional):
+
+        '
+      name: scope
+      type: input
+    - message: 'Commit message:
+
+        '
+      name: message
+      type: input
+    schema: '<type>: <body>'
+    schema_pattern: "<type>(<scope>): <subject>\r\n<BLANK LINE>\r\n<body>\r\n<BLANK\
+      \ LINE>\r\n<footer>"
+  name: cz_customize
+  tag_format: $version
+  update_changelog_on_bump: true
+  version: 0.0.2
+  version_files:
+  - package.json:^\s+\"version\":\s+\"\d+\.\d+\.\d+\"
+  version_scheme: semver
